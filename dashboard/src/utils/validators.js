@@ -1,9 +1,9 @@
-export function validateEmptyAndLength5 (value) {
+export function validateEmptyAndLength3 (value) {
   if (!value) {
     return 'Campo obrigatório!'
   }
-  if (value.length < 5) {
-    return 'Senha inválida, o campo espera receber no mínimo 5 caracteres!'
+  if (value.length < 3) {
+    return 'Senha inválida, o campo espera receber no mínimo 3 caracteres!'
   }
 
   return true
@@ -17,6 +17,17 @@ export function validateEmptyAndEmail (value) {
 
   if (!isValid) {
     return 'Email inválido, digite um e-mail válido!'
+  }
+
+  return true
+}
+
+export function validateEmptyAndName (value) {
+  if (!value) {
+    return 'Campo obrigatório!'
+  }
+  if (value.length < 7) {
+    return 'Nome inválido, campo espera receber no mínimo 7 caracteres!'
   }
 
   return true

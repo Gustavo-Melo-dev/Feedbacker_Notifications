@@ -37,7 +37,9 @@
           </p>
         </div>
         <div class="mt-8">
-          <button class="px-6 py-2 font-bold bg-white rounded-full text-brand-main">
+          <button
+          @click="() => emit('create-account')"
+          class="px-6 py-2 font-bold bg-white rounded-full text-brand-main">
             Crie uma conta grátis
           </button>
         </div>
@@ -56,7 +58,7 @@ export default {
 }
 </script>
 
-<style lang="postcss">
+<style lang="postcss" scoped>
 .header {
   @apply bg-brand-main w-full flex justify-center;
   height: 700px;

@@ -24,12 +24,12 @@
           <input type="email"
             placeholder="Digite seu e-mail..."
             class="text-black mb-3 bg-gray-200 border-transparent rounded"
-            :class="{ 'border-brand-danger': !!state.email.errorEmail }"
+            :class="{ 'border-brand-danger': !!state.email.errorMessage }"
             v-model="state.email.value">
           <span
-            v-if="!!state.email.errorEmail"
+            v-if="!!state.email.errorMessage"
             class="block font-medium text-brand-danger">
-            {{ state.email.errorEmail }}
+            {{ state.email.errorMessage }}
           </span>
         </div>
       </label>
@@ -40,13 +40,13 @@
           <input type="password"
           placeholder="Digite sua senha..."
           class="text-black mb-5 bg-gray-200 border-transparent rounded"
-          :class="{ 'border-brand-danger': !!state.password.errorPassword }"
+          :class="{ 'border-brand-danger': !!state.password.errorMessage }"
           v-model="state.password.value">
           <span
-            v-if="!!state.password.errorPassword"
+            v-if="!!state.password.errorMessage"
             class="block font-medium text-brand-danger"
           >
-            {{ state.password.errorPassword }}
+            {{ state.password.errorMessage }}
           </span>
           <span
             class="lnr lnr-eye">
@@ -60,12 +60,14 @@
           type="submit"
           class="flex flex-col rounded-full bg-white text-brand-main px-7 py-1 mb-1 font-medium focus:outline-none transition-all duration-150"
           :class="{ 'opacity-50': state.isLoading }">
-          Entrar
+          <icon v-if="state.isLoading" name="loading" class="animate-spin"></icon>
+          <span v-else>Entrar</span>
         </button>
       </div>
       <div class="flex justify-center">
         <a
-          href="http://www.google.com.br"
+          href="http://www.gmail.com.br"
+          target="_blank"
           class="font-medium underline text-white">Esqueceu sua senha?</a>
       </div>
     </form>
@@ -74,37 +76,76 @@
 
 <script>
 import { reactive } from 'vue'
+import { useRouter } from 'vue-router'
 import { useField } from 'vee-validate'
+import { useToast } from 'vue-toastification'
 import useModal from '../../hooks/useModal'
-import { validateEmptyAndLength5, validateEmptyAndEmail } from '../../utils/validators'
+import Icon from '../Icon'
+import { validateEmptyAndLength3, validateEmptyAndEmail } from '../../utils/validators'
+import services from '../../services'
 export default {
+  components: { Icon },
   setup () {
     const modal = useModal()
 
+    const router = useRouter()
+
+    const toast = useToast()
+
     const {
       value: emailValue,
-      errorEmail: emailErrorMessage
+      errorMessage: emailErrorMessage
     } = useField('email', validateEmptyAndEmail)
 
     const {
       value: passwordValue,
-      errorPassword: passwordErrorMessage
-    } = useField('password', validateEmptyAndLength5)
+      errorMessage: passwordErrorMessage
+    } = useField('password', validateEmptyAndLength3)
 
     const state = reactive({
       hasErrors: false,
       isLoading: false,
       email: {
         value: emailValue,
-        errorEmail: emailErrorMessage
+        errorMessage: emailErrorMessage
       },
       password: {
         value: passwordValue,
-        errorPassword: passwordErrorMessage
+        errorMessage: passwordErrorMessage
       }
     })
 
-    function handleSubmit () {}
+    async function handleSubmit () {
+      try {
+        toast.clear()
+        state.isLoading = true
+        const { data, errors } = await services.auth.login({
+          email: state.email.value,
+          password: state.password.value
+        })
+        if (!errors) {
+          window.localStorage.setItem('token', data.token)
+          router.push({ name: 'Feedbacks' })
+          state.isLoading = false
+          modal.close()
+          return
+        }
+        if (errors.status === 400) {
+          toast.error('Ocorreu um erro ao fazer o login')
+        }
+        if (errors.status === 401) {
+          toast.error('E-mail/Senha inválidos')
+        }
+        if (errors.status === 404) {
+          toast.error('E-mail não encontrado')
+        }
+        state.isLoading = false
+      } catch (error) {
+        state.isLoading = false
+        state.hasErrors = !!error
+        toast.error('Ocorreu um erro ao fazer o login')
+      }
+    }
 
     return {
       state,
