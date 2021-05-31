@@ -28,7 +28,7 @@
             v-model="state.name.value">
           <span
             v-if="!!state.name.errorMessage"
-            class="block font-medium text-brand-danger">
+            class="errorMessage">
             {{ state.name.errorMessage }}
           </span>
         </div>
@@ -44,7 +44,7 @@
             v-model="state.email.value">
           <span
             v-if="!!state.email.errorMessage"
-            class="block font-medium text-brand-danger">
+            class="errorMessage">
             {{ state.email.errorMessage }}
           </span>
         </div>
@@ -60,7 +60,7 @@
           v-model="state.password.value">
           <span
             v-if="!!state.password.errorMessage"
-            class="block font-medium text-brand-danger"
+            class="errorMessage"
           >
             {{ state.password.errorMessage }}
           </span>
@@ -186,8 +186,8 @@ export default {
 }
 </script>
 
-<style>
+<style lang="postcss" scoped>
 .errorMessage {
-  color: white;
+  @apply block font-medium text-white;
 }
 </style>
