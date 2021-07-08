@@ -22,7 +22,7 @@
           <template #default>
             <filters
             @select="changeFeedbacksType"
-            class="mt-8 animate__animated animate__fadeIn animete__faster"
+            class="mt-8 animate__animated animate__fadeIn animate__faster"
             />
           </template>
           <template #fallback>
