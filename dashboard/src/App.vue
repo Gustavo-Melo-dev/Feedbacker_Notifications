@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import ModalFactory from '../src/components/ModalFactory'
+import ModalFactory from './components/ModalFactory'
 import { useRouter, useRoute } from 'vue-router'
 import { watch } from 'vue'
 import services from './services'
@@ -26,7 +26,7 @@ export default {
           router.push({ name: 'Home' })
           return
         }
-        const { data } = await services.getMe()
+        const { data } = await services.users.getMe()
         setCurrentUser(data)
       }
     })

@@ -37,7 +37,7 @@ export default {
     setup (props) {
       const computedWidth = computed(() => {
         const value = Math.random() * (props.width - props.minWidth)
-        return props.width ?? `${Math.floor(value + props.minWidth)}%`
+        return props.width || `${Math.floor(value + props.minWidth)}%`
       })
       return {
         computedWidth

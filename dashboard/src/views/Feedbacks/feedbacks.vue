@@ -63,9 +63,8 @@ import FiltersLoading from './FiltersLoading'
 import HeaderLogged from '@/components/HeaderLogged'
 import FeedbackCard from '@/components/FeedbackCard'
 import FeedbackCardLoading from '@/components/FeedbackCard/Loading.vue'
-import { reactive } from '@vue/reactivity'
 import services from '../../services'
-import { onErrorCaptured, onMounted, onUnmounted } from '@vue/runtime-core'
+import { reactive, onErrorCaptured, onMounted, onUnmounted } from 'vue'
 export default {
   components: { HeaderLogged, Filters, FiltersLoading, FeedbackCard, FeedbackCardLoading },
   setup () {
@@ -84,7 +83,7 @@ export default {
     })
     onErrorCaptured(handleErrors)
     onMounted(() => {
-      fatchFeedbacks()
+      fetchFeedbacks()
       window.addEventListener('scroll', handleScroll, false)
     })
     onUnmounted(() => {
@@ -137,7 +136,7 @@ export default {
         handleErrors(error)
       }
     }
-    async function fatchFeedbacks () {
+    async function fetchFeedbacks () {
       try {
         state.isLoading = true
         const { data } = await services.feedbacks.getAll({
@@ -154,7 +153,7 @@ export default {
     return {
       state,
       handleErrors,
-      fatchFeedbacks,
+      fetchFeedbacks,
       changeFeedbacksType
     }
   }

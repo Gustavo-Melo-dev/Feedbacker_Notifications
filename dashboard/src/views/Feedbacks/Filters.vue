@@ -36,14 +36,14 @@ const LABELS = {
   all: 'Todos',
   issue: 'Problemas',
   idea: 'Ideais',
-  others: 'Outros'
+  other: 'Outros'
 }
 
 const COLORS = {
   all: 'brand-info',
   issue: 'brand-danger',
   idea: 'brand-warning',
-  others: 'brand-graydark'
+  other: 'brand-graydark'
 }
 
 function applyFiltersStructure (summary) {

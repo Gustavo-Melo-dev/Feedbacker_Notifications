@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-brand-main mb-5 flex justify-between">
+    <div id="modal-create-account" class="bg-brand-main mb-5 flex justify-between">
       <p>
         <center>
           <img

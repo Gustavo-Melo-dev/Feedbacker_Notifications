@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="bg-brand-main mb-5 flex justify-between">
+    <div class="bg-brand-main mb-5 flex justify-between" id="modal-login-account">
       <p>
         <center>
           <img
@@ -21,12 +21,15 @@
       <label class="block">
         <div class="flex flex-col font-medium text-white">
           E-mail:
-          <input type="email"
+          <input
+            id="email-field"
+            type="email"
             placeholder="Digite seu e-mail..."
             class="text-black mb-3 bg-gray-200 border-transparent rounded"
             :class="{ 'border-brand-danger': !!state.email.errorMessage }"
             v-model="state.email.value">
           <span
+            id="email-error"
             v-if="!!state.email.errorMessage"
             class="errorMessage">
             {{ state.email.errorMessage }}
@@ -37,12 +40,15 @@
       <label class="block">
         <div class="flex flex-col font-medium text-white">
           Senha:
-          <input type="password"
+          <input
+          id="password-field"
+          type="password"
           placeholder="Digite sua senha..."
           class="text-black mb-5 bg-gray-200 border-transparent rounded"
           :class="{ 'border-brand-danger': !!state.password.errorMessage }"
           v-model="state.password.value">
           <span
+            id="password-error"
             v-if="!!state.password.errorMessage"
             class="errorMessage"
           >
@@ -56,11 +62,12 @@
 
       <div class="flex justify-center">
         <button
+          id="submit-button"
           :disabled="state.isLoading"
           type="submit"
           class="flex flex-col rounded-full bg-white text-brand-main px-7 py-1 mb-1 font-medium focus:outline-none transition-all duration-150"
           :class="{ 'opacity-50': state.isLoading }">
-          <icon v-if="state.isLoading" name="loading" class="animate-spin"></icon>
+          <icon v-if="state.isLoading" name="loading" class="md:animate-spin lg:animate-none"></icon>
           <span v-else>Entrar</span>
         </button>
       </div>

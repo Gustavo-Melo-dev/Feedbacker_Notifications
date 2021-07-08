@@ -6,6 +6,7 @@
     <div class="flex">
       <ul class="flex list-none">
         <li
+        id="credentials-button"
         @click="() => router.push({ name: 'Credencials' })"
         class="py-2 px-6 rounded-full font-bold cursor-pointer text-white focus:outline-none">
           Credenciais
@@ -16,6 +17,7 @@
           Feedbacks
         </li>
         <li
+        id="logout-button"
         @click="handleLogout"
         class="py-2 px-6 rounded-full font-bold cursor-pointer bg-white text-brand-main focus:outline-none">
           {{ logoutLabel }}
@@ -38,7 +40,7 @@ export default {
       if (!store.currentUser.name) {
         return '...'
       }
-      return `${!store.currentUser.name} (sair)`
+      return `${store.currentUser.name} (sair)`
     })
     function handleLogout () {
       window.localStorage.removeItem('token')
