@@ -6,13 +6,13 @@ import { setGlobalLoading } from '../store/global'
 import FeedbacksService from './feedbacks'
 
 const API_ENVS = {
-  production: '',
+  production: 'https://backend-feedbacker-notifications.vercel.app',
   development: '',
   local: 'http://localhost:3000'
 }
 
 const httpClient = axios.create({
-  baseURL: API_ENVS.local
+  baseURL: API_ENVS[process.env.NODE_ENVS] || API_ENVS.local
 })
 
 httpClient.interceptors.request.use(config => {
