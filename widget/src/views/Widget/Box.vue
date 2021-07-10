@@ -1,42 +1,41 @@
 <template>
-  <div
-  class="box animate__animated animate__fadeInUp animate__faster">
+  <div class="box animate__animated animate__fadeInUp animate__faster">
     <div
-    class="relative w-full flex"
-    :class="{
-      'justify-between': canShowAdditionalControlAndInfo,
-      'justify-end': !canShowAdditionalControlAndInfo
-    }">
-      <button v-if="canShowAdditionalControlAndInfo"
-      @click="() => ({})"
-      :disabled="canGoBack"
-      :class="{ invisible: canGoBack }"
-      class="text-xl text-gray-800 focus:outline-none">
-        <icon
-        name="arrow-right"
-        color="colors.gray['800']"
-        />
+      :class="{
+        'justify-between': canShowAdditionalControlAndInfo,
+        'justify-end': !canShowAdditionalControlAndInfo
+      }"
+      class="relative w-full flex">
+      <button
+        v-if="canShowAdditionalControlAndInfo"
+        @click="back"
+        :disabled="canGoBack"
+        :class="{ invisible: canGoBack }"
+        class="text-xl text-gray-800 focus:outline-none"
+      >
+        <icon name="arrow-right" :color="colors.gray['800']" />
       </button>
-      <p v-if="canShowAdditionalControlAndInfo"
-      class="text-xl font-black text-center text-brand-main">
+
+      <p
+        v-if="canShowAdditionalControlAndInfo"
+        class="text-xl font-black text-center text-brand-main"
+        >
         {{ label }}
       </p>
+
       <button
-      @click="() => emit('close-box')"
-      class="text-xl text-gray-800 focus:outline-none">
-        <icon
-        name="close"
-        color="colors.gray['800']"
-        size="14"
-        />
+        @click="() => emit('close-box')"
+        class="text-xl text-gray-800 focus:outline-none"
+      >
+        <icon size="14" name="close" :color="colors.gray['800']" />
       </button>
     </div>
+
+    <wizard />
+
     <div class="text-gray-800 text-sm flex" v-if="canShowAdditionalControlAndInfo">
-      <icon
-      name="chat_box"
-      class="mr-1"
-      color="gray"/>
-      Widget by
+      <icon name="chat" class="mr-1" :color="brandColors.graydark" />
+      widget by
       <span class="ml-1 font-bold">Feedbacker Notifications</span>
     </div>
   </div>
@@ -48,6 +47,8 @@ import { brand } from '../../../palette.js'
 import colors from 'tailwindcss/colors'
 import useStore from '@/hooks/store'
 import Icon from '@/components/Icon/index.vue'
+import Wizard from '@/components/Wizard/index.vue'
+import useNavigation, { Navigation } from '@/hooks/navigation'
 
 interface SetupReturn {
   emit: SetupContext['emit'];
@@ -56,13 +57,15 @@ interface SetupReturn {
   label: ComputedRef<string>;
   brandColors: Record<string, string>;
   colors: Record<string, string>;
+  back: Navigation['back'];
 }
 
 export default defineComponent({
-  components: { Icon },
+  components: { Icon, Wizard },
   emits: ['close-box'],
   setup (_, { emit }: SetupContext): SetupReturn {
     const store = useStore()
+    const { back } = useNavigation()
     const label = computed<string>(() => {
       if (store.feedbackType === 'ISSUE') {
         return 'Reporte um problema'
@@ -83,6 +86,7 @@ export default defineComponent({
     })
     return {
       emit,
+      back,
       label,
       colors,
       brandColors: brand,
