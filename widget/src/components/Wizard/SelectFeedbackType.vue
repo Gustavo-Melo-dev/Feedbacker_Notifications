@@ -14,6 +14,7 @@
 
     <button
       @click="() => handleSelect('IDEA')"
+      id="button-idea"
       class="
         rounded-xl hover:bg-gray-100 bg-brand-gray flex flex-col
         justify-center items-center p-5 w-28 cursor-pointer focus:outline-none

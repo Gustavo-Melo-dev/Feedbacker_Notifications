@@ -1,10 +1,12 @@
 <template>
   <div class="felx flex-col items-center justify-center w-full my-5">
     <textarea
+      id="text-write"
       v-model="state.feedback"
       class="w-full rounded-lg border-2 border-gray-300 border-solid h-24 p-2 resize-none focus:outline-none">
     </textarea>
     <button
+      id="send-text"
       :disabled="submitButtonIsDisabled"
       :class="{
         'opacity-50': state.isLoading,
