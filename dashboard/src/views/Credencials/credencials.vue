@@ -1,4 +1,5 @@
 <template>
+  <div>
   <div class="flex justify-center w-full h-28 bg-brand-main">
     <HeaderLogged/>
   </div>
@@ -63,10 +64,16 @@
       class="py-3 pl-5 pr-20 mt-2 rounded bg-brand-gray overflow-x-scroll w-full lg:w-1/2">
         <span v-if="state.hasError">Erro ao carregar o script</span>
         <pre v-else>
-          &lt;script src="https://gustavo-melo-dev-feedbacker-widget.netlify.app?apikey={{store.User.currentUser.apiKey}}"&gt;&lt;/script&gt;
+          &lt;script
+          defer
+          async
+          onload="init('{{store.User.currentUser.apiKey}}')"
+          src="https://gustavo-melo-dev-feedbacker-widget.netlify.app/init.js"
+          &gt;&lt;/script&gt;
         </pre>
       </div>
     </div>
+  </div>
   </div>
 </template>
 

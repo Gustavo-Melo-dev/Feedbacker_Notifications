@@ -67,7 +67,7 @@
           type="submit"
           class="flex flex-col rounded-full bg-white text-brand-main px-7 py-1 mb-1 font-medium focus:outline-none transition-all duration-150"
           :class="{ 'opacity-50': state.isLoading }">
-          <icon v-if="state.isLoading" name="loading" class="md:animate-spin lg:animate-none"></icon>
+          <icon v-if="state.isLoading" name="loading" class="animate_animated animate-spin"></icon>
           <span v-else>Entrar</span>
         </button>
       </div>

@@ -22,7 +22,7 @@
 
 <script lang="ts">
 import { defineComponent, SetupContext } from 'vue'
-import Icon from '@/components/Icon/index.vue'
+import Icon from '../../components/Icon/index.vue'
 
 interface SetupReturn {
   emit: SetupContext['emit'];
@@ -32,9 +32,7 @@ export default defineComponent({
   components: { Icon },
   emits: ['open-box'],
   setup (_, { emit }: SetupContext): SetupReturn {
-    return {
-      emit
-    }
+    return { emit }
   }
 })
 </script>
